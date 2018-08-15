@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Input, List, Pagination, Tag, Affix } from 'antd'
 import './App.css'
 
-const octokit = require('@octokit/rest')()
+// eslint-disable-next-line
+const octokit = new Octokit()
 
 class App extends Component {
   hots = [
