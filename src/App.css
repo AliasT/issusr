@@ -1,0 +1,19 @@
+@import '~antd/dist/antd.css';
+
+.App {
+  max-width: 1080px;
+  min-height: 100vh;
+  padding: 20px;
+  margin: 0 auto;
+  background: #eee;
+}
+
+.issues-hot-names {
+  margin: 10px 0;
+}
+
+.issues-list {
+  background: #fff;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
