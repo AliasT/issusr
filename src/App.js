@@ -37,7 +37,7 @@ class App extends Component {
       this.setState({
         current: page,
         items, 
-        total: total_count, 
+        total: Math.min(total_count, 1000), // github limitation
         loading: false,
       })
     }).catch((msg) => {
@@ -73,46 +73,48 @@ class App extends Component {
     const { loading, items, total, query, current } = this.state
     return (
       <div className="App">
-        <div className="issues-search">
-          <Input.Search
-            value={query.username}
-            enterButton
-            placeholder="Enter the github username"
-            onSearch={() => this.search() }
-            onChange={e => this.onNameChange(e.target.value)} />
+        <div className="issues">
+          <div className="issues-search">
+            <Input.Search
+              value={query.username}
+              enterButton
+              placeholder="Enter the github username"
+              onSearch={() => this.search() }
+              onChange={e => this.onNameChange(e.target.value)} />
+          </div>
+          <div className="issues-hot-names">
+            {
+              this.hots.map(hot => (
+                <Tag
+                  className="hot-tag"
+                  key={hot} 
+                  onClick={() => this.onTagClick(hot)}>
+                  {hot}
+                </Tag>
+              ))
+            }
+          </div>
+          <div className="issues-list">
+            <List
+              loading={loading}
+              itemLayout="horizontal"
+              dataSource={items}
+              renderItem={item => (
+                <List.Item className="issue-item">
+                  <List.Item.Meta
+                    description={<div className="issue-update-time">{moment(item.created_at).fromNow()}</div>}
+                    title={<a href={item.html_url} target="_blank">{item.title}</a>}
+                  />
+                </List.Item>
+              )} />
+          </div>
+          <Pagination
+            hideOnSinglePage
+            pageSize={30}
+            total={total}
+            onChange={this.search}
+            current={current} />
         </div>
-        <div className="issues-hot-names">
-          {
-            this.hots.map(hot => (
-              <Tag
-                className="hot-tag"
-                key={hot} 
-                onClick={() => this.onTagClick(hot)}>
-                {hot}
-              </Tag>
-            ))
-          }
-        </div>
-        <div className="issues-list">
-          <List
-            loading={loading}
-            itemLayout="horizontal"
-            dataSource={items}
-            renderItem={item => (
-              <List.Item>
-                <List.Item.Meta
-                  description={<div className="issue-update-time">{moment(item.created_at).fromNow()}</div>}
-                  title={<a href={item.html_url} target="_blank">{item.title}</a>}
-                />
-              </List.Item>
-            )} />
-        </div>
-        <Pagination
-          hideOnSinglePage
-          pageSize={30}
-          total={total}
-          onChange={this.search}
-          current={current} />
       </div>
     );
   }

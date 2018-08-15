@@ -1,11 +1,14 @@
 @import '~antd/dist/antd.css';
 
 .App {
-  max-width: 1080px;
   min-height: 100vh;
+  background: #eee;
+}
+
+.issues {
   padding: 20px;
   margin: 0 auto;
-  background: #eee;
+  max-width: 960px;
 }
 
 .issues-hot-names {
@@ -13,9 +16,13 @@
 }
 
 .issues-list {
-  background: #fff;
   margin-bottom: 10px;
-  padding: 0 10px;
+}
+
+.issue-item {
+  background: #fff;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .hot-tag {
@@ -26,3 +33,4 @@
   text-align: right;
   font-size: 10px;
 }
+
