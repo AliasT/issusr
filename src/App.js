@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, List, Pagination, Tag, Affix } from 'antd'
+import { Input, List, Pagination, Tag } from 'antd'
+import moment from 'moment'
 import './App.css'
 
 // eslint-disable-next-line
@@ -72,20 +73,23 @@ class App extends Component {
     const { loading, items, total, query, current } = this.state
     return (
       <div className="App">
-        <Affix offsetTop={10}>
-          <div className="issues-search">
-            <Input.Search
-              value={query.username}
-              enterButton
-              placeholder="Enter the github username"
-              onSearch={() => this.search() }
-              onChange={e => this.onNameChange(e.target.value)} />
-          </div>
-        </Affix>
+        <div className="issues-search">
+          <Input.Search
+            value={query.username}
+            enterButton
+            placeholder="Enter the github username"
+            onSearch={() => this.search() }
+            onChange={e => this.onNameChange(e.target.value)} />
+        </div>
         <div className="issues-hot-names">
           {
             this.hots.map(hot => (
-              <Tag key={hot} onClick={() => this.onTagClick(hot)}>{hot}</Tag>
+              <Tag
+                className="hot-tag"
+                key={hot} 
+                onClick={() => this.onTagClick(hot)}>
+                {hot}
+              </Tag>
             ))
           }
         </div>
@@ -97,6 +101,7 @@ class App extends Component {
             renderItem={item => (
               <List.Item>
                 <List.Item.Meta
+                  description={<div className="issue-update-time">{moment(item.created_at).fromNow()}</div>}
                   title={<a href={item.html_url} target="_blank">{item.title}</a>}
                 />
               </List.Item>
