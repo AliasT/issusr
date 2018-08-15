@@ -29,8 +29,9 @@
   margin-bottom: 5px;
 }
 
-.issue-update-time {
-  text-align: right;
+.issue-item-footer {
+  display: flex;
+  justify-content: space-between;
   font-size: 10px;
 }
 

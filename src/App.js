@@ -99,14 +99,7 @@ class App extends Component {
               loading={loading}
               itemLayout="horizontal"
               dataSource={items}
-              renderItem={item => (
-                <List.Item className="issue-item">
-                  <List.Item.Meta
-                    description={<div className="issue-update-time">{moment(item.created_at).fromNow()}</div>}
-                    title={<a href={item.html_url} target="_blank">{item.title}</a>}
-                  />
-                </List.Item>
-              )} />
+              renderItem={issueItem} />
           </div>
           <Pagination
             hideOnSinglePage
@@ -118,6 +111,32 @@ class App extends Component {
       </div>
     );
   }
+}
+
+
+const toRepo = (original) => {
+  const name =  original.replace('https://api.github.com/repos/', '') // may be
+  return {
+    name,
+    repo_html_url: 'https://github.com/' + name
+  }
+}
+
+function issueItem (item) {
+  const { name, repo_html_url } = toRepo(item.repository_url)
+  return (
+    <List.Item className="issue-item">
+      <List.Item.Meta
+        description={
+          <div className="issue-item-footer">
+            <a href={repo_html_url}><i>{name}</i></a>
+            <span>{moment(item.created_at).fromNow()}</span>
+          </div>
+        }
+        title={<a href={item.html_url} target="_blank">{item.title}</a>}
+      />
+    </List.Item>
+  )
 }
 
 export default App;
