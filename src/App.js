@@ -9,6 +9,7 @@ const octokit = new Octokit()
 class App extends Component {
   hots = [
     'gaearon',
+    'bvaughn',
     'yyx990803',
     'addyosmani',
     'donnemartin',
@@ -36,7 +37,7 @@ class App extends Component {
       const { items, total_count } = data
       this.setState({
         current: page,
-        items, 
+        items,
         total: Math.min(total_count, 1000), // github limitation
         loading: false,
       })
@@ -57,7 +58,7 @@ class App extends Component {
 
   onTagClick = (username) => {
     this.setState({
-      query: { 
+      query: {
         username
       }
     }, () => {
@@ -87,7 +88,7 @@ class App extends Component {
               this.hots.map(hot => (
                 <Tag
                   className="hot-tag"
-                  key={hot} 
+                  key={hot}
                   onClick={() => this.onTagClick(hot)}>
                   {hot}
                 </Tag>
